@@ -35,12 +35,22 @@ class IniFileStrategy extends AbstractLoaderStrategy
                 $this->resolveAbsolutePathname(),
                 $file
             ),
-            true
+            true,
+            \INI_SCANNER_TYPED
         );
 
         $container = $this->getContainer();
 
         foreach ($config as $key => $conf) {
+            $autowired = !isset($conf['autowire'])
+                ? false
+                : $conf['autowire'];
+
+            if ($autowired) {
+                $container->autowire($key, $conf['class']);
+                continue;
+            }
+
             $params = !isset($conf['parameters'])
                 ? []
                 : $this->parseArray($conf['parameters']);
