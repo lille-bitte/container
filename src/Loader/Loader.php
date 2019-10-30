@@ -5,7 +5,7 @@ namespace LilleBitte\Container\Loader;
 /**
  * @author Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
  */
-class Loader
+final class Loader
 {
     /**
      * @var LoaderStrategyInterface
@@ -17,6 +17,12 @@ class Loader
         $this->loaderStrategy = $strategy;
     }
 
+    /**
+     * Load dependency configuration from file.
+     *
+     * @param string $file Configuration file.
+     * @return void
+     */
     public function load(string $file)
     {
         $this->loaderStrategy->deserialize($file);

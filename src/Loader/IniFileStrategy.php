@@ -64,6 +64,12 @@ class IniFileStrategy extends AbstractLoaderStrategy
         }
     }
 
+    /**
+     * Deserializing '[a, b, c]' to actual array.
+     *
+     * @param string $buf String to parse.
+     * @return array
+     */
     private function parseArray(string $buf)
     {
         $buf = explode(
