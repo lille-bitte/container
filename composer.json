@@ -1,0 +1,23 @@
+{
+    "name": "lille-bitte/container",
+    "description": "Dependency injection container.",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "autoload": {
+    	"psr-4": {
+    		"LilleBitte\\Container\\": "src/"
+    	}
+    },
+    "autoload-dev": {
+    	"psr-4": {
+    		"LilleBitte\\Container\\Tests\\": "tests/",
+            "LilleBitte\\Container\\Tests\\Fixtures\\": "tests/fixtures/"
+    	}
+    },
+    "require": {
+        "psr/container": "^1.0"
+    },
+    "require-dev": {
+        "symfony/yaml": "^4.3"
+    }
+}
