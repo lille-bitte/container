@@ -17,46 +17,46 @@ use function explode;
  */
 class YamlFileStrategy extends AbstractLoaderStrategy
 {
-	public function __construct(ContainerBuilder $container, string $dir)
-	{
-		$this->setContainer($container);
-		$this->setConfigDir($dir);
-	}
+    public function __construct(ContainerBuilder $container, string $dir)
+    {
+        $this->setContainer($container);
+        $this->setConfigDir($dir);
+    }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function deserialize(string $file)
-	{
-		$config = Yaml::parseFile(
-			sprintf(
-				"%s/%s",
-				$this->resolveAbsolutePathname(),
-				$file
-			)
-		);
+    /**
+     * {@inheritdoc}
+     */
+    public function deserialize(string $file)
+    {
+        $config = Yaml::parseFile(
+            sprintf(
+                "%s/%s",
+                $this->resolveAbsolutePathname(),
+                $file
+            )
+        );
 
-		$container = $this->getContainer();
+        $container = $this->getContainer();
 
-		foreach ($config as $key => $conf) {
-			$params = !isset($conf['parameters']) ? [] : $conf['parameters'];
+        foreach ($config as $key => $conf) {
+            $params = !isset($conf['parameters']) ? [] : $conf['parameters'];
 
-			foreach ($params as $k => $q) {
-				if (is_string($q) && false !== strpos($q, '@ref')) {
-					$spl = explode(':', $q);
+            foreach ($params as $k => $q) {
+                if (is_string($q) && false !== strpos($q, '@ref')) {
+                    $spl = explode(':', $q);
 
-					if (!isset($spl[1]) && count($spl) !== 2) {
-						throw new ContainerException(
-							"Reference value must be '@ref:<reference_id>' in YAML config."
-						);
-					}
+                    if (!isset($spl[1]) && count($spl) !== 2) {
+                        throw new ContainerException(
+                            "Reference value must be '@ref:<reference_id>' in YAML config."
+                        );
+                    }
 
-					$params[$k] = new Reference($spl[1]);
-				}
-			}
+                    $params[$k] = new Reference($spl[1]);
+                }
+            }
 
-			$container->register($key, $conf['class'])
-				->setArguments($params);
-		}
-	}
+            $container->register($key, $conf['class'])
+                ->setArguments($params);
+        }
+    }
 }

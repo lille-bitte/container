@@ -7,18 +7,18 @@ namespace LilleBitte\Container\Loader;
  */
 class Loader
 {
-	/**
-	 * @var LoaderStrategyInterface
-	 */
-	private $loaderStrategy;
+    /**
+     * @var LoaderStrategyInterface
+     */
+    private $loaderStrategy;
 
-	public function __construct(LoaderStrategyInterface $strategy)
-	{
-		$this->loaderStrategy = $strategy;
-	}
+    public function __construct(LoaderStrategyInterface $strategy)
+    {
+        $this->loaderStrategy = $strategy;
+    }
 
-	public function load(string $file)
-	{
-		$this->loaderStrategy->deserialize($file);
-	}
+    public function load(string $file)
+    {
+        $this->loaderStrategy->deserialize($file);
+    }
 }

@@ -7,23 +7,23 @@ namespace LilleBitte\Container;
  */
 final class Reference
 {
-	/**
-	 * @var string
-	 */
-	private $id;
+    /**
+     * @var string
+     */
+    private $id;
 
-	public function __construct($id)
-	{
-		$this->id = $id;
-	}
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
 
-	/**
-	 * Get reference id.
-	 *
-	 * @return string
-	 */
-	public function getId()
-	{
-		return $this->id;
-	}
+    /**
+     * Get reference id.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }

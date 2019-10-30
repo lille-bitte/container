@@ -7,8 +7,8 @@ namespace LilleBitte\Container\Tests\Fixtures;
  */
 class Foo
 {
-	public function log()
-	{
-		echo "this is a foo." . PHP_EOL;
-	}
+    public function log()
+    {
+        echo "this is a foo." . PHP_EOL;
+    }
 }

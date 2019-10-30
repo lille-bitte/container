@@ -7,12 +7,12 @@ namespace LilleBitte\Container\Loader;
  */
 interface LoaderStrategyInterface
 {
-	/**
-	 * Map configuration file into
-	 * dependency injection builder.
-	 *
-	 * @param string $file Configuration file.
-	 * @return ContainerBuilderInterface
-	 */
-	public function deserialize(string $file);
+    /**
+     * Map configuration file into
+     * dependency injection builder.
+     *
+     * @param string $file Configuration file.
+     * @return ContainerBuilderInterface
+     */
+    public function deserialize(string $file);
 }

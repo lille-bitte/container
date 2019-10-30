@@ -7,23 +7,23 @@ namespace LilleBitte\Container\Tests\Fixtures;
  */
 class Bar
 {
-	/**
-	 * @var Foo
-	 */
-	private $foo;
+    /**
+     * @var Foo
+     */
+    private $foo;
 
-	public function __construct(Foo $foo)
-	{
-		$this->foo = $foo;
-	}
+    public function __construct(Foo $foo)
+    {
+        $this->foo = $foo;
+    }
 
-	public function log()
-	{
-		echo "this is a bar." . PHP_EOL;
-	}
+    public function log()
+    {
+        echo "this is a bar." . PHP_EOL;
+    }
 
-	public function getFoo()
-	{
-		return $this->foo;
-	}
+    public function getFoo()
+    {
+        return $this->foo;
+    }
 }
