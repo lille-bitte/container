@@ -1,0 +1,7 @@
+foo:
+  class: LilleBitte\Container\Tests\Fixtures\Foo
+  autowire: true
+
+bar:
+  class: LilleBitte\Container\Tests\Fixtures\Bar
+  autowire: true
