@@ -17,6 +17,11 @@ final class Definition
      */
     private $class;
 
+    /**
+     * @var boolean
+     */
+    private $autowired = false;
+
     public function __construct($class)
     {
         $this->setClass($class);
@@ -86,5 +91,15 @@ final class Definition
     public function getClass()
     {
         return $this->class;
+    }
+
+    public function setAutowire(bool $autowired)
+    {
+        $this->autowired = $autowired;
+    }
+
+    public function isAutowired()
+    {
+        return $this->autowired;
     }
 }
