@@ -65,7 +65,7 @@ class IniFileStrategy extends AbstractLoaderStrategy
     }
 
     /**
-     * Deserializing '[a, b, c]' to actual array.
+     * Deserializing '[...]' to actual array.
      *
      * @param string $buf String to parse.
      * @return array
