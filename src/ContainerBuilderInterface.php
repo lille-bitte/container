@@ -19,6 +19,15 @@ interface ContainerBuilderInterface extends ContainerInterface
     public function register($id, $class);
 
     /**
+     * Autowire service name aliased by id.
+     *
+     * @param string $id Service id.
+     * @param string $class Class name.
+     * @return Definition
+     */
+    public function autowire($id, $class);
+
+    /**
      * Set definition based on it's id.
      *
      * @param string $id Definition id.
