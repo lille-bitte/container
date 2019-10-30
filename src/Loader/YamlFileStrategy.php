@@ -39,6 +39,13 @@ class YamlFileStrategy extends AbstractLoaderStrategy
         $container = $this->getContainer();
 
         foreach ($config as $key => $conf) {
+            $autowired = !isset($conf['autowire']) ? false : $conf['autowire'];
+
+            if ($autowired) {
+                $container->autowire($key, $conf['class']);
+                continue;
+            }
+
             $params = !isset($conf['parameters']) ? [] : $conf['parameters'];
 
             foreach ($params as $k => $q) {
