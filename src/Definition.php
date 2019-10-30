@@ -93,11 +93,22 @@ final class Definition
         return $this->class;
     }
 
+    /**
+     * Set autowiring option.
+     *
+     * @param boolean $autowired
+     * @return void
+     */
     public function setAutowire(bool $autowired)
     {
         $this->autowired = $autowired;
     }
 
+    /**
+     * Check if autowiring option is true.
+     *
+     * @return boolean
+     */
     public function isAutowired()
     {
         return $this->autowired;
