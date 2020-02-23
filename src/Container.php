@@ -57,7 +57,49 @@ abstract class Container implements ContainerInterface
      */
     public function has($id)
     {
-        return in_array($id, array_keys($this->definitions), true);
+        $keys = array_unique(
+            array_merge(
+                array_keys($this->cached),
+                array_keys($this->definitions),
+                array_keys($this->instances)
+            )
+        );
+
+        return in_array($id, $keys, true);
+    }
+
+    /**
+     * Set container cache directory.
+     *
+     * @param string $dir Cache directory.
+     * @return void
+     */
+    public function setCacheDir(string $dir)
+    {
+        $this->cacheDir = $dir;
+    }
+
+    /**
+     * Get container cache directory.
+     *
+     * @return string
+     */
+    public function getCacheDir()
+    {
+        return $this->cacheDir;
+    }
+
+    /**
+     * Load container from cache file.
+     *
+     * @return void
+     */
+    protected function loadFromCache()
+    {
+        $file = $this->getCacheDir() . '/container.cache.php';
+        $this->cached = file_exists($file) && filesize($file) > 0
+            ? require $file
+            : [];
     }
 
     /**
