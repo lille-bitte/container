@@ -48,6 +48,26 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function addCompilerPass(CompilerPassInterface $pass)
+    {
+        $this->compilerPasses[] = $pass;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function compile()
+    {
+        foreach ($this->compilerPasses as $pass) {
+            $pass($this);
+        }
+
+        $this->writeCompiledContainerToCache();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function make($id)
     {
         $arguments = $this->definitions[$id]->getArguments();
