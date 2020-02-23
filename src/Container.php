@@ -16,6 +16,26 @@ abstract class Container implements ContainerInterface
     protected $definitions = [];
 
     /**
+     * @var array
+     */
+    protected $instances = [];
+
+    /**
+     * @var array
+     */
+    protected $compilerPasses = [];
+
+    /**
+     * @var array
+     */
+    protected $cached = [];
+
+    /**
+     * @var array
+     */
+    protected $cacheDir;
+
+    /**
      * {@inheritdoc}
      */
     public function get($id)
