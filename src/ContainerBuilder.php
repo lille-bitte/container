@@ -5,6 +5,8 @@ namespace LilleBitte\Container;
 use ReflectionClass;
 use LilleBitte\Container\Exception\ContainerException;
 
+use function spl_object_hash;
+
 /**
  * @author Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
  */
