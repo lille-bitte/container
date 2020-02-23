@@ -70,6 +70,18 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
      */
     protected function make($id)
     {
+        if (is_null($this->cached) || empty($this->cached)) {
+            $this->loadFromCache();
+        }
+
+        if (isset($this->cached[$id])) {
+            return $this->cached[$id];
+        }
+
+        if (isset($this->instances[$id])) {
+            return $this->instances[$id];
+        }
+
         $arguments = $this->definitions[$id]->getArguments();
         $class = $this->definitions[$id]->getClass();
 
