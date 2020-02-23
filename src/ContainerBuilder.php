@@ -32,6 +32,14 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
     /**
      * {@inheritdoc}
      */
+    public function instance($id, $instance)
+    {
+        $this->instances[$id] = $instance;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function setDefinition($id, Definition $definition)
     {
         return $this->definitions[$id] = $definition;
