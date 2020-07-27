@@ -2,8 +2,7 @@
 
 namespace LilleBitte\Container;
 
-use LilleBitte\Container\Exception\ContainerException;
-
+use function get_class;
 use function spl_object_hash;
 
 /**
