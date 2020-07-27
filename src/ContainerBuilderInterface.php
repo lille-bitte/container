@@ -7,8 +7,15 @@ use Psr\Container\ContainerInterface;
 /**
  * @author Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
  */
-interface ContainerBuilderInterface extends ContainerInterface
+interface ContainerBuilderInterface
 {
+    /**
+     * Build and return a container.
+     *
+     * @return ContainerInterface
+     */
+    public function build();
+
     /**
      * Register service name with an alias.
      *
