@@ -2,7 +2,6 @@
 
 namespace LilleBitte\Container;
 
-use ReflectionClass;
 use LilleBitte\Container\Exception\ContainerException;
 
 use function spl_object_hash;
@@ -10,8 +9,46 @@ use function spl_object_hash;
 /**
  * @author Paulus Gandung Prakosa <rvn.plvhx@gmail.com>
  */
-class ContainerBuilder extends Container implements ContainerBuilderInterface
+class ContainerBuilder implements ContainerBuilderInterface
 {
+    /**
+     * @var array
+     */
+    private $definitions = [];
+
+    /**
+     * @var array
+     */
+    private $compilerPasses = [];
+
+    /**
+     * @var array
+     */
+    private $instances = [];
+
+    /**
+     * @var array
+     */
+    private $cached = [];
+
+    /**
+     * @var string
+     */
+    private $cacheDir;
+
+    /**
+     * @var string
+     */
+    private $cacheFile;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function build()
+    {
+        return new Container($this->definitions, $this->instances, $this->loadFromCache());
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -68,50 +105,45 @@ class ContainerBuilder extends Container implements ContainerBuilderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get container cache directory
+     *
+     * @return string
      */
-    protected function make($id)
+    public function getCacheDir()
     {
-        if (is_null($this->cached) || empty($this->cached)) {
-            $this->loadFromCache();
-        }
+        return $this->cacheDir;
+    }
 
-        if (isset($this->cached[$id])) {
-            return $this->cached[$id];
-        }
+    /**
+     * Set container cache directory.
+     *
+     * @param string $dir Cache directory.
+     * @return void
+     */
+    public function setCacheDir(string $dir)
+    {
+        $this->cacheDir = $dir;
+    }
 
-        if (isset($this->instances[$id])) {
-            return $this->instances[$id];
-        }
+    /**
+     * Get container cache file name.
+     *
+     * @return string
+     */
+    public function getCacheFile()
+    {
+        return $this->cacheFile;
+    }
 
-        $arguments = $this->definitions[$id]->getArguments();
-        $class = $this->definitions[$id]->getClass();
-
-        if (!class_exists($class)) {
-            throw new ContainerException(
-                sprintf(
-                    "Class with name (%s) not exists.",
-                    $class
-                )
-            );
-        }
-
-        if ($this->definitions[$id]->isAutowired()) {
-            return $this->processAutowiring($class);
-        }
-
-        if (!count($arguments)) {
-            return new $class;
-        }
-
-        foreach ($arguments as $key => $argument) {
-            if ($argument instanceof Reference) {
-                $arguments[$key] = $this->make($argument->getId());
-            }
-        }
-
-        $refl = new ReflectionClass($class);
-        return $refl->newInstanceArgs($arguments);
+    /**
+     * Set container cache file name.
+     *
+     * @param string $file Cache file name.
+     * @return void
+     */
+    public function setCacheFile(string $file)
+    {
+        $this->cacheFile = $file;
     }
 
     /**
@@ -150,43 +182,21 @@ CACHE_BUFFER;
 
         // write compiled container to {file}
         file_put_contents(
-            $this->getCacheDir() . '/container.cache.php',
+            sprintf('%s/%s', $this->getCacheDir(), $this->getCacheFile()),
             $buf
         );
     }
 
     /**
-     * Autowire a service.
+     * Load container from cache file.
      *
-     * @param string $class Class name.
-     * @return object
+     * @return array
      */
-    private function processAutowiring($class)
+    protected function loadFromCache()
     {
-        $refl = new ReflectionClass($class);
-
-        if (!$refl->hasMethod('__construct')) {
-            return $refl->newInstanceWithoutConstructor();
-        }
-
-        $instances = [];
-        $refMethod = $refl->getMethod('__construct');
-
-        foreach ($refMethod->getParameters() as $key => $refParam) {
-            $class = $refParam->getClass();
-
-            if (!($class instanceof ReflectionClass)) {
-                throw new ContainerException(
-                    sprintf(
-                        "Parameter (\$%s) is not a class.",
-                        $refParam->getName()
-                    )
-                );
-            }
-
-            $instances[] = $this->processAutowiring($class->getName());
-        }
-
-        return $refl->newInstanceArgs($instances);
+        $file = sprintf('%s/%s', $this->getCacheDir(), $this->getCacheFile());
+        return file_exists($file) && filesize($file) > 0
+            ? require $file
+            : [];
     }
 }
