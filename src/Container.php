@@ -59,19 +59,15 @@ class Container implements ContainerInterface
      */
     public function has($id)
     {
-        if (!isset($this->cached[$id])) {
-            return false;
-        }
+        $keys = array_unique(
+            array_merge(
+                array_keys($this->cached),
+                array_keys($this->definitions),
+                array_keys($this->instances)
+            )
+        );
 
-        if (!isset($this->definitions[$id])) {
-            return false;
-        }
-
-        if (!isset($this->instances[$id])) {
-            return false;
-        }
-
-        return true;
+        return in_array($id, $keys);
     }
 
     /**
@@ -149,10 +145,10 @@ class Container implements ContainerInterface
                 continue;
             }
 
-            if ($class->isInterface()) {
+            /*if ($class->isInterface()) {
                 $constructorMethodParams[] = $this->getAlias($class->getName());
                 continue;
-            }
+            }*/
 
             $constructorMethodParams[] = $this->resolveAutowiredClass($class->getName());
         }
