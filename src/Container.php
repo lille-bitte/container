@@ -145,11 +145,6 @@ class Container implements ContainerInterface
                 continue;
             }
 
-            /*if ($class->isInterface()) {
-                $constructorMethodParams[] = $this->getAlias($class->getName());
-                continue;
-            }*/
-
             $constructorMethodParams[] = $this->resolveAutowiredClass($class->getName());
         }
 
