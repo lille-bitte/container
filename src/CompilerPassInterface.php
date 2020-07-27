@@ -9,33 +9,33 @@ namespace LilleBitte\Container;
  */
 interface CompilerPassInterface
 {
-	/**
-	 * Invoke current class to inject dependency
-	 * into given container.
-	 *
-	 * @param ContainerBuilderInterface $container Dependency injection container.
-	 * @return void
-	 */
-	public function __invoke(ContainerBuilderInterface $container);
+    /**
+     * Invoke current class to inject dependency
+     * into given container.
+     *
+     * @param ContainerBuilderInterface $container Dependency injection container.
+     * @return void
+     */
+    public function __invoke(ContainerBuilderInterface $container);
 
-	/**
-	 * Get service tag name.
-	 *
-	 * @return string
-	 */
-	public function getTag();
+    /**
+     * Get service tag name.
+     *
+     * @return string
+     */
+    public function getTag();
 
-	/**
-	 * Get associated class name.
-	 *
-	 * @return string
-	 */
-	public function getAssociatedClass();
+    /**
+     * Get associated class name.
+     *
+     * @return string
+     */
+    public function getAssociatedClass();
 
-	/**
-	 * Get serialized service instantiation.
-	 *
-	 * @return string
-	 */
-	public function getSerializedValue();
+    /**
+     * Get serialized service instantiation.
+     *
+     * @return string
+     */
+    public function getSerializedValue();
 }
