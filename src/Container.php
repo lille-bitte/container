@@ -2,7 +2,6 @@
 
 namespace LilleBitte\Container;
 
-use Psr\Container\ContainerInterface;
 use LilleBitte\Container\Exception\NotFoundException;
 
 /**
